@@ -145,12 +145,14 @@ App = {
 
     const form = document.getElementById("kycForm");
     const formData = new FormData(form);
+    console.log(formData);
 
     try {
       const response = await fetch("/ipfs/file-upload", {
         method: "POST",
         body: formData,
       });
+
 
       if (response.ok) {
         const responseData = await response.json();
@@ -316,9 +318,9 @@ App = {
   tableBody.innerHTML = html;
   },
 
-  KYCVerification: async(tokenId)=>{
+  KYCVerification: async(industryID)=>{
     await App.load();
-    console.log(tokenId)
+    console.log(industryID)
     
     function getCookieValue(cookieName) {
         const cookies = document.cookie.split('; ');
@@ -335,11 +337,16 @@ App = {
 
     if(userRole == 'government'){
         await App.contracts.kyc.methods
-        .verifyCertificate(tokenId,1)
+        .verifyCertificate(industryID, 1)
         .send({ from: App.account });
 
         window.location.href = "/kyc-verification";
     }
+    const fileAdded = await node.add({
+      path: "FILE_PATH",
+      content: "DESCRIPTION",
+    });
+    console.log("Added file:", fileAdded.path, fileAdded.cid);
   },
 
   FetchEmission: async () => {
@@ -780,31 +787,3 @@ App = {
   },
   
 };
-
-// document.addEventListener("DOMContentLoaded", async () => {
-//   await App.load();
-
-//   const kycForm = document.getElementById("kycForm");
-//   if (kycForm) {
-//     kycForm.addEventListener("submit", async (event) => {
-//       event.preventDefault();
-//       await App. KYCVerification();
-//     });
-//   } else {
-//     console.error("Form element not found");
-//   }
-
-//   const verifyButton = document.getElementById("verifyButton");
-//   if (verifyButton) {
-//     verifyButton.addEventListener("click", async () => {
-//       const industryID = verifyButton.getAttribute("data-industry-id");
-//       if (industryID) {
-//         await App.KYCVerification(industryID);
-//       } else {
-//         console.error("Industry ID is undefined");
-//       }
-//     });
-//   } else {
-//     console.error("Verify button not found");
-//   }
-// });

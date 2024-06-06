@@ -1,8 +1,13 @@
 {
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
-    "hardhat": "^2.22.4"
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-fileupload": "^1.5.0",
+    "hardhat": "^2.22.4",
+    "ipfs-api": "^26.1.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0"
