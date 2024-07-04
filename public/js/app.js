@@ -270,9 +270,7 @@ App = {
 
   FetchKYCIndustry: async () => {
     await App.load();
-    const certificateCount = await App.contracts.kyc.methods
-      .certificateCount()
-      .call();
+    const certificateCount = await App.contracts.kyc.methods.certificateCount().call();
 
     tabel_body = document.getElementById("tabel-body");
     console.log(certificateCount)
@@ -302,7 +300,7 @@ App = {
   
       
       console.log(certificate);
-      const kycStatus = getStatusText(certificate[1]);
+      const kycStatus = getStatusText(certificate.status);
     html += `<tr>
         <th scope="row">${j + 1}</th>
         <td>${certificate[2]}</td>
@@ -320,7 +318,7 @@ App = {
 
   KYCVerification: async(industryID)=>{
     await App.load();
-    console.log(industryID)
+    console.log(industryID);
     
     function getCookieValue(cookieName) {
         const cookies = document.cookie.split('; ');
@@ -337,16 +335,16 @@ App = {
 
     if(userRole == 'government'){
         await App.contracts.kyc.methods
-        .verifyCertificate(industryID, 1)
+        .verifyCertificate(industryID,1)
         .send({ from: App.account });
 
         window.location.href = "/kyc-verification";
     }
-    const fileAdded = await node.add({
-      path: "FILE_PATH",
-      content: "DESCRIPTION",
-    });
-    console.log("Added file:", fileAdded.path, fileAdded.cid);
+    // const fileAdded = await node.add({
+    //   path: "FILE_PATH",
+    //   content: "DESCRIPTION",
+    // });
+    // console.log("Added file:", fileAdded.path, fileAdded.cid);
   },
 
   FetchEmission: async () => {
